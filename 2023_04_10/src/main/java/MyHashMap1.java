@@ -12,84 +12,105 @@ public class MyHashMap1 {
     }
 
     //插入元素
-    public void put(Node node) {
-        int insPos = node.key % 64;
-        if (nodeArray[insPos] == null) {
+    public void put(int key, int value) {
+        int index = key % 64;
+        if (nodeArray[index] == null) {
             //新插入的元素
-            Node head = new Node(node.key, node.value);
-            head.next = null;
-            nodeArray[insPos] = head;
+            nodeArray[index] = new Node(key, value);
         } else {
-            if (nodeArray[insPos].key != node.key) {
-                //分配到一个bucket，但是要看是否出现了hash冲突，还是说就
-                Node cur = nodeArray[insPos];
-                while (cur.next != null) {
-                    cur = cur.next;
-                }
-                cur.next = node;
-                node.next = null;
-            }else{
+            append(nodeArray[index], key, value);
+        }
+    }
 
+    //在head链表里添加元素
+    void append(Node head, int key, int value) {
+        while (head.next != null) {
+            if (head.key == key) {
+                head.value = value;
+                return;
+            }
+            head = head.next;
+        }
+        head.next = new Node(key, value);
+    }
+
+    //删除元素
+    public void remove(int key) throws Exception {
+        int index = key % 64;
+        Node head = nodeArray[index];
+        if (head == null) {
+            throw new Exception("不存在对应键值的元素");
+        }
+        Node prev = head;
+        while (head != null) {
+            if (head.key == key) {
+                if (head == prev) {
+                    nodeArray[index] = head.next;
+                } else {
+                    prev.next = head.next;
+                }
+                return;
+            } else {
+                prev = head;
+                head = head.next;
             }
         }
     }
 
-    //删除元素
-    public Node remove(int key) throws Exception {
-        int delPos = key % 10001;
-        Node head = nodeArray[delPos];
+    //查找元素,fix
+    public int get(int key) {
+        int index = key % 64;
+        Node head = nodeArray[index];
         if (head == null) {
-            throw new Exception("不存在对应键值的元素");
-        }
-        if (head.key == key) {
-            //头部为重复的
-            nodeArray[delPos] = head.next;
-            head.next = null;
-            return head;
-        }
-        while (head.next != null && head.next.key != key) {
-            head = head.next;
-        }
-        if (head.next == null) {
-            throw new Exception("不存在对应键值的元素");
-        }
-        Node tmp = head.next;
-        head.next = head.next.next;
-        return tmp;
-    }
-
-    //查找元素
-    public Node get(int key) throws Exception {
-        int queryPos = key % 64;
-        Node head = nodeArray[queryPos];
-        if (head == null) {
-            throw new Exception("不存在对应键值的元素");
+            return -1;
         }
         while (head != null) {
             if (head.key == key) {
-                return head;
+                return head.value;
             } else {
                 head = head.next;
             }
         }
-        return null;
+        return -1;
     }
 
     //Test
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         MyHashMap1 hashmap = new MyHashMap1();
-        hashmap.put(new Node(0, 111));
-        hashmap.put(new Node(1, 111));
-        hashmap.put(new Node(65, 111));
+        hashmap.put(0, 000);
+        hashmap.put(1, 111);
+        hashmap.put(2, 222);
+        hashmap.put(64, 000);
+        hashmap.put(65, 111);
+        hashmap.put(66, 222);
+        hashmap.get(0);
+        hashmap.get(1);
+        hashmap.get(2);
+        hashmap.get(64);
+        hashmap.get(65);
+        hashmap.get(66);
+
+        hashmap.remove(0);
+        hashmap.remove(1);
+        hashmap.remove(2);
+        hashmap.remove(64);
+        hashmap.remove(65);
+        hashmap.remove(66);
+
+        hashmap.get(0);
+        hashmap.get(1);
+        hashmap.get(2);
+        hashmap.get(64);
+        hashmap.get(65);
+        hashmap.get(66);
+
+
         System.out.println(hashmap);
     }
-
-
 }
 
 class Node {
-    int key;
-    int value;
+    int key, value;
     Node next;
 
     public Node(int key, int value) {
