@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class MyHashMap<K, V> {
+public class ChatGptHashMap<K, V> {
     // 初始桶的数量
     private static final int DEFAULT_CAPACITY = 16;
     // 桶数组
@@ -15,7 +15,7 @@ public class MyHashMap<K, V> {
     // 锁
     private ReentrantReadWriteLock[] locks;
 
-    public MyHashMap() {
+    public ChatGptHashMap() {
         table = new List[DEFAULT_CAPACITY];
         locks = new ReentrantReadWriteLock[DEFAULT_CAPACITY];
         for (int i = 0; i < DEFAULT_CAPACITY; i++) {

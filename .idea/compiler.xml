@@ -6,7 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="_2023_04_14" />
         <module name="2023_04_10" />
+        <module name="_2023_04_12" />
       </profile>
     </annotationProcessing>
   </component>
