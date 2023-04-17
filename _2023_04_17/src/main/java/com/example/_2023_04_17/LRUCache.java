@@ -1,3 +1,7 @@
+package com.example._2023_04_17;
+
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 
 /**
@@ -5,15 +9,19 @@ import java.util.HashMap;
  * 基础版本的LRU算法的实现，参照leetcode
  * @apiNote 双向链表+hash表
  */
+@Component
 public class LRUCache {
     private DoubleList cache;
     private HashMap<Integer, Node> map;
     int capacity;
 
-    public LRUCache(int cap) {
+    public LRUCache() {
         this.cache = new DoubleList();
         this.map = new HashMap<Integer, Node>();
-        this.capacity = cap;
+        this.capacity = 10;
+    }
+    public int getSize(){
+        return cache.size;
     }
 
     public int get(int key) {
@@ -25,7 +33,7 @@ public class LRUCache {
         return res;
     }
 
-    private void put(int key, int value) {
+    void put(int key, int value) {
         //是否包含该key
         Node target = new Node(key, value);
         if (map.containsKey(key)) {
@@ -45,6 +53,34 @@ public class LRUCache {
             }
         }
     }
+
+    void delete(int key) throws Exception {
+        //删除对应值为key节点
+        if(cache.size <= 0){
+            throw new Exception("空链表不能删除");
+        }
+//        1.找到节点
+        Node target = map.get(key);
+//        2.链表中删除
+        target.prev.next = target.next;
+        target.next.prev = target.prev;
+//        3.hash关系删除
+        map.remove(key);
+    }
+
+    String getAllNodes(){
+        Node cur = cache.head;
+        String res = new String();
+        while(cur.next != cache.tail){
+            cur = cur.next;
+            res = res + "(" + cur.key + "," + cur.value + ")" + "->";
+        }
+        res = res + "null";
+        System.out.println(res);
+        return res;
+    }
+
+
 
 }
 
