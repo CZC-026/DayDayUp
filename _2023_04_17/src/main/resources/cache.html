@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>LRU Cache</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h1>LRU Cache</h1>
+<form th:action="@{/add}" method="post">
+    <input type="text" name="key" placeholder="key"/>
+    <input type="text" name="value" placeholder="value"/>
+    <input type="submit" value="Add"/>
+</form>
+<form th:action="@{/remove}" method="post">
+    <input type="text" name="key" placeholder="key"/>
+    <input type="submit" value="Remove"/>
+</form>
+<form th:action="@{/search}" method="post">
+    <input type="text" name="key" placeholder="key"/>
+    <input type="submit" value="Search"/>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${cache.entrySet()}">
+        <td th:text="${entry.getKey()}"></td>
+        <td th:text="${entry.getValue()}"></td>
+    </tr>
+    </tbody>
+</table>
+<div th:if="${searchKey != null}">
+    <p>Search result for <span th:text="${searchKey}"></span>:</p>
+    <table>
+        <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${cache.containsKey(searchKey)}">
+            <td th:text="${searchKey}"></td>
+            <td th:text="${cache.get(searchKey)}"></td>
+        </tr>
+        <tr th:if="${!cache.containsKey(searchKey)}">
+            <td colspan="2">No result</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
