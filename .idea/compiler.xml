@@ -10,6 +10,7 @@
         <module name="_2023_04_14" />
         <module name="_2023_04_16" />
         <module name="2023_04_10" />
+        <module name="_2023_04_20" />
         <module name="_2023_04_12" />
         <module name="aopTest" />
         <module name="_2023_04_17" />
@@ -22,6 +23,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="BUPT_Canteens" options="-parameters" />
       <module name="_2023_04_17" options="-parameters" />
+      <module name="_2023_04_20" options="-parameters" />
       <module name="aopTest" options="-parameters" />
     </option>
   </component>
