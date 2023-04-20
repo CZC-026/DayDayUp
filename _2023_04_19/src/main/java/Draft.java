@@ -6,6 +6,7 @@ public class Draft {
         dog.print();
         dog.action("running");
 
+
     }
 
 
@@ -32,6 +33,9 @@ class Dog extends Animal{
         System.out.println("2"+food);
         System.out.println("3"+super.food);
         System.out.println(likes);
+    }
+    void action(String doing){
+        System.out.println(this);
     }
 
 
